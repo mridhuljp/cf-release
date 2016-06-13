@@ -159,3 +159,7 @@ php-buildpack/php_buildpack-cached-v4.3.14.zip:
   object_id: 491e1b45-174f-4252-9173-ced61ab5d43a
   sha: de7680e24957184e1fa720077ef0880ad3dce92b
   size: 288277420
+nginx/nginx-1.11.1.tar.gz:
+  object_id: ced13588-cd45-44d4-bf76-0f6d668522ea
+  sha: 6b6172b26628b95c4ad0d6cb5b11eb4aa59c2a83
+  size: 913417
