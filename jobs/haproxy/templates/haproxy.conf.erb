@@ -39,6 +39,7 @@ frontend https-in
     option httplog
     option forwardfor
     reqadd X-Forwarded-Proto:\ https
+    rspadd Strict-Transport-Security:\ max-age=31536000;\ includeSubDomains
     default_backend http-routers
 
 frontend ssl-in
