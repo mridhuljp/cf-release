@@ -30,6 +30,22 @@ frontend http-in
     option forwardfor
     reqadd X-Forwarded-Proto:\ http
     default_backend http-routers
+<%
+if_p("ha_proxy.headers") do |headers|
+  headers.each do |header, value|
+%>
+    reqadd <%= header.gsub(/(?!:\\)( )/, '\ ') %>:\ <%= value.gsub(/(?!:\\) /, '\ ') %>
+<%
+  end
+end
+%>
+
+<% if p("ha_proxy.internal_only_domains").size > 0 %>
+    acl public src 0.0.0.0/0
+<% p("ha_proxy.internal_only_domains").each do |domain| %>
+    acl internal hdr(Host) -m sub <%= domain %>
+<% end %>
+    http-request deny if internal public
 <% end %>
 
 <% if p("ha_proxy.ssl_pem") %>
@@ -40,6 +56,15 @@ frontend https-in
     option forwardfor
     reqadd X-Forwarded-Proto:\ https
     default_backend http-routers
+<%
+if_p("ha_proxy.headers") do |headers|
+  headers.each do |header, value|
+%>
+    reqadd <%= header.gsub(/(?!:\\)( )/, '\ ') %>:\ <%= value.gsub(/(?!:\\) /, '\ ') %>
+<%
+  end
+end
+%>
 
 frontend ssl-in
     mode tcp
